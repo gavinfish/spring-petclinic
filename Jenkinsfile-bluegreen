@@ -1,3 +1,5 @@
+def userInput
+
 node('master') {
     stage('init') {
         checkout scm
@@ -12,10 +14,19 @@ node('master') {
         '''
     }
 
-    stage('deploy') {
+    stage('preview') {
         azureWebAppPublish appName: env.APP_NAME,
             azureCredentialsId: env.CRED_ID,
             resourceGroup: env.RESOURCE_GROUP,
-            filePath: 'target/*.zip'
+            filePath: 'target/*.zip',
+            slotName: 'preview'
     }
+
+    if (userInput == true) {
+        stage('switch back') {
+
+        }
+    } else {
+        // Send a notification
+    } 
 }
