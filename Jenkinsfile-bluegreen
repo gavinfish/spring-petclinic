@@ -23,9 +23,24 @@ node('master') {
             slotName: 'preview'
     }
 
-    if (userInput == true) {
-        stage('switch back') {
+    stage('confirm swap slots') {
+        try {
+            userInput = input(
+                id: 'Proceed1', message: 'Do you want to swap slots?', parameters: [
+                [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you want to swap the slots']
+                ])
+        } catch(err) { // input false
+            echo "Aborted"
+        }
+    }
 
+    if (userInput == true) {
+        stage('swap slots') {
+            azureWebAppSwapSlots appName: env.APP_NAME,
+                azureCredentialsId: env.CRED_ID,
+                resourceGroup: env.RESOURCE_GROUP,
+                sourceSlotName: 'production',
+                targetSlotName: 'preview'
         }
     } else {
         // Send a notification
