@@ -8,7 +8,8 @@ node('master') {
             ./mvnw clean package
             cd target
             mv *.jar petclinic.jar
-            zip petclinic.zip ../web.config petclinic.jar
+            cp ../web.config web.config
+            zip petclinic.zip web.config petclinic.jar
         '''
     }
 
