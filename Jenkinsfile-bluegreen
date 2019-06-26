@@ -18,7 +18,7 @@ node('master') {
     stage('preview') {
         azureWebAppPublish appName: env.APP_NAME,
             azureCredentialsId: env.CRED_ID,
-            resourceGroup: env.RESOURCE_GROUP,
+            resourceGroup: 'petclinic',
             filePath: 'target/*.zip',
             slotName: 'preview'
     }
@@ -38,7 +38,7 @@ node('master') {
         stage('swap slots') {
             azureWebAppSwapSlots appName: env.APP_NAME,
                 azureCredentialsId: env.CRED_ID,
-                resourceGroup: env.RESOURCE_GROUP,
+                resourceGroup: 'petclinic',
                 sourceSlotName: 'production',
                 targetSlotName: 'preview'
         }

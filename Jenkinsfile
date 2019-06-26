@@ -16,7 +16,7 @@ node('master') {
     stage('deploy') {
         azureWebAppPublish appName: env.APP_NAME,
             azureCredentialsId: env.CRED_ID,
-            resourceGroup: env.RESOURCE_GROUP,
+            resourceGroup: 'petclinic',
             filePath: 'target/*.zip'
     }
 }
